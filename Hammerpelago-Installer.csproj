@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Hammerpelago_Installer</RootNamespace>
+    <AssemblyName>HammerwatchAPInstaller</AssemblyName>
+    <TargetFramework>net5.0-windows</TargetFramework>
+	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bsdiff.Core" Version="1.0.1" />
+  </ItemGroup>
+
+</Project>
