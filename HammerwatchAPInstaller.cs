@@ -84,44 +84,41 @@ namespace Hammerpelago_Installer
             else
             {
                 Console.Error.WriteLine("Installer located in Hammerwatch install directory");
-                hammerwatchPath = installerPath;
+                Console.Error.WriteLine("This method of installation is no longer supported. Please do not move any files before installing the mod");
+                Exit();
+                return;
             }
 
             if (hammerwatchPath != null)
             {
-                if (hammerwatchPath != installerPath)
+                string hammerwatchExePath = Path.Combine(hammerwatchPath, hammerwatchExeName);
+                string hammerpelagoExePath = Path.Combine(hammerwatchPath, hammerpelagoName);
+                string apAssetsPath = Path.Combine(hammerwatchPath, "archipelago-assets");
+                string vanillaLocation = Path.Combine(apAssetsPath, hammerwatchExeName);
+                //Copy mod files to Hammerwatch directory
+                if(Directory.Exists(apAssetsPath))
                 {
-                    //Copy mod files to Hammerwatch directory
-                    DeepCopy(installerPath, hammerwatchPath, new List<string> { "LICENSE.txt", "HammerwatchAPInstaller.exe", "HammerwatchAP.bsdiff" });
+                    //Replace the modded exe with the vanilla one to apply the bsdiff
+                    Console.WriteLine("Mod already installed, removing and reinstalling");
+                    File.Copy(vanillaLocation, hammerwatchExePath, true);
+                    Directory.Delete(apAssetsPath, true);
                 }
+                DeepCopy(installerPath, hammerwatchPath, new List<string> { "LICENSE.txt", "HammerwatchAPInstaller.exe", "HammerwatchAP.bsdiff" });
                 try
                 {
-                    string hammerwatchExePath = Path.Combine(hammerwatchPath, hammerwatchExeName);
-                    string hammerpelagoExePath = Path.Combine(hammerwatchPath, hammerpelagoName);
-                    string vanillaLocation = Path.Combine(hammerwatchPath, "archipelago-assets", hammerwatchExeName);
-
                     //Open hammerwatch exe path and compute the hash to make sure that it's the right version/vanilla
                     FileStream hammerwatchExeStream = new(hammerwatchExePath, FileMode.Open, FileAccess.Read, FileShare.Read);
                     using MD5 md5 = MD5.Create();
                     string exeHashString = BitConverter.ToString(md5.ComputeHash(hammerwatchExeStream)).Replace("-", "").ToLower();
                     hammerwatchExeStream.Dispose();
 
-                    switch(exeHashString)
+                    if(exeHashString != "ddf8414912a48b5b2b77873a66a41b57") //Vanilla hash
                     {
-                        case "ddf8414912a48b5b2b77873a66a41b57": //Vanilla hash
-                            //Backup the vanilla exe so uninstalling/reinstalling is easier
-                            File.Copy(hammerwatchExePath, vanillaLocation);
-                            break;
-                        default: //During dev the hash will be changing rapidly, so we'll keep this default block for now
-                            //Replace the modded exe with the vanilla one to apply the bsdiff
-                            Console.WriteLine("Mod already installed, removing and reinstalling");
-                            File.Copy(vanillaLocation, hammerwatchExePath, true);
-                            break;
-                        //default:
-                        //    Console.Error.WriteLine("Incorrect Hammerwatch version, make sure that version 1.41 is installed!");
-                        //    Exit();
-                        //    return;
+                        Console.Error.WriteLine("Vanilla Hammerwatch exe not found, please reinstall Hammerwatch");
+                        Exit();
+                        return;
                     }
+                    File.Copy(hammerwatchExePath, vanillaLocation);
 
                     //Reopen the hammerwatch exe (should be vanilla at this point) and apply the bsdiff
                     FileStream input = new(hammerwatchExePath, FileMode.Open, FileAccess.Read, FileShare.Read);
