@@ -1,9 +1,11 @@
-# Hammerwatch Archipelago Mod Installer
+# !! This version of the installer/mod is no longer updated, see the mod repo [here](https://github.com/Parcosmic/HammerwatchAPMod) and the new installer repo [here](https://github.com/Parcosmic/Hammerwatch-Archipelago-Mod-Installer) !!
 
-This is the Archipelago mod installer for the hack and slash dungeon crawler game Hammerwatch. Check out [archipelago.gg](https://archipelago.gg/) or 
+# OLD Hammerwatch Archipelago Mod Installer
+
+This is the OLD Archipelago mod installer for the hack and slash dungeon crawler game Hammerwatch. Check out [archipelago.gg](https://archipelago.gg/) or 
 the [Archipelago GitHub](https://github.com/ArchipelagoMW/Archipelago/releases) for information about what Archipelago is!
 
-## Hammerwatch Mod Installation Procedures
+## OLD Hammerwatch Mod Installation Procedures
 
 Download and extract the .zip file containing the installer and necessary files from the 
 [Releases](https://github.com/Parcosmic/Hammerwatch-Archipelago-Mod-Installer/releases) page. Run HammerwatchAPInstaller.exe, and
